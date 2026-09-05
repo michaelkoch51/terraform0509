@@ -1,32 +1,41 @@
-##Этот файл для 7 задания!!
-locals {
+variable "test_list" {
+  type    = list(string)
+  default = ["dev", "staging", "prod"]
+}
 
-  test_list = ["develop", "staging", "production"]
-
-  test_map = {
-    admin = "John"
-    user  = "Alex"
+variable "test_map" {
+  type = map(string)
+  default = {
+    admin = "john"
+    user  = "alex"
   }
+}
 
-  servers = {
-    develop = {
-      cpu   = 2
-      ram   = 4
-      image = "ubuntu-21-10"
-      disks = ["vda", "vdb"]
-    },
-    stage = {
+variable "servers" {
+  type = map(object({
+    desc  = string
+    image = string
+    cpu   = number
+    ram   = number
+    disks = list(string)
+  }))
+  default = {
+    production = {
+      desc  = "Main Production Server"
+      image = "ubuntu-2204-lts"
       cpu   = 4
       ram   = 8
-      image = "ubuntu-20-04"
-      disks = ["vda", "vdb"]
-    },
-    production = {
-      cpu   = 10
-      ram   = 40
-      image = "ubuntu-20-04"
-      disks = ["vda", "vdb", "vdc", "vdd"]
+      disks = ["disk1", "disk2"]
     }
   }
+}
+
+variable "test" {
+  type = list(map(list(string)))
+  default = [
+    {
+      "dev1" = ["localhost", "127.0.0.1"]
+    }
+  ]
 }
 
